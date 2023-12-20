@@ -1,15 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div id="app">
+    <TreeAnimation
+      v-if="showTree"
+      @animation-finished="handleAnimationFinished"
+    />
+    <div v-if="showMainContent">
+      <MainPage />
+      <TextTyping />
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import TreeAnimation from "./components/tree_animation.vue";
+import MainPage from "./components/main_page.vue";
+import TextTyping from "./components/text_typing.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    TreeAnimation,
+    MainPage,
+    TextTyping,
+  },
+  data() {
+    return {
+      showTree: true,
+    };
+  },
+  computed: {
+    showMainContent() {
+      return !this.showTree;
+    },
+  },
+  methods: {
+    handleAnimationFinished() {
+      this.showTree = false;
+    },
   },
 };
 </script>
