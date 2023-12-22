@@ -2,10 +2,10 @@
   <div class="wrapper">
     <div class="static-txt">I'm a</div>
     <ul class="dynamic-txts">
-      <li><span>YouTuber</span></li>
-      <li><span>Designer</span></li>
-      <li><span>Developer</span></li>
-      <li><span>Freelancer</span></li>
+      <li><span>asdaf</span></li>
+      <li><span>fasdfa</span></li>
+      <li><span>fefwsfds</span></li>
+      <li><span>cxcvsd</span></li>
     </ul>
   </div>
 </template>
