@@ -1,13 +1,21 @@
 const express = require("express");
-const router = express.Router();
+const app = express();
+app.enable("strict routing");
+const router = express.Router({
+  strict: app.get("strict routing"),
+  caseSensitive: app.get("case sensitive routing"),
+});
 const faker = require("faker");
+const ProductsService = require("../services/product.service");
+
+const productsService = new ProductsService();
 
 // GET route
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // Handle GET request logic here
   res.send("GET request");
 });
-router.get("/products", (req, res) => {
+router.get("/products", async (req, res) => {
   // Handle GET request logic here
   const products = [];
   const { size } = req.query;
@@ -23,35 +31,30 @@ router.get("/products", (req, res) => {
   }
   res.json(products);
 });
-router.get("/products/filter", (req, res) => {
-    // Handle GET request logic here
-    res.send("Filter GET request");
+router.get("/products/filter", async (req, res) => {
+  // Handle GET request logic here
+  res.send("Filter GET request");
 });
 
-router.get("/products/:id", (req, res) => {
+router.get("/products/:id", async (req, res) => {
   // Handle GET request logic here
-  res.json({ id: req.params.id, name: `Product ${req.params.id}` });
+  const product = await productsService.getProductById(req.params.id);
+  res.json(product);
 });
 
-
-
-
-router.get("/categories", (req, res) => {
+router.get("/categories", async (req, res) => {
   // Handle GET request logic here
-  res.json([
-    // res.send() can also be used
-    { id: 1, name: "Category 1" },
-    { id: 2, name: "Category 2" },
-    { id: 3, name: "Category 3" },
-  ]);
+  const categories = await productsService.getCategories();
+  res.json(categories);
 });
-router.get("/categories/:id", (req, res) => {
+router.get("/categories/:id", async (req, res) => {
   // Handle GET request logic here
-  res.json({ id: req.params.id, name: `Category ${req.params.id}` });
+  const category = await productsService.getCategoryById(req.params.id);
+  res.json(category);
 });
 
 // GET route with query string for users
-router.get("/users", (req, res) => {
+router.get("/users", async (req, res) => {
   // Handle GET request logic here
   const { limit, offset } = req.query;
   if (limit && offset) {
@@ -65,19 +68,19 @@ router.get("/users", (req, res) => {
 });
 
 // POST route
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   // Handle POST request logic here
   res.send("POST request");
 });
 
 // PUT route
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   // Handle PUT request logic here
   res.send(`PUT request for ID: ${req.params.id}`);
 });
 
 // DELETE route
-router.delete("/:id", (req, res) => {
+router.delete("/:id", async (req, res) => {
   // Handle DELETE request logic here
   res.send(`DELETE request for ID: ${req.params.id}`);
 });
