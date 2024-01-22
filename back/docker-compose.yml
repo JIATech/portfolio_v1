@@ -21,4 +21,4 @@ services:
       - 5555:80
 
 
-      # IP POSTGRES 172.20.0.2
+      # IP POSTGRES 172.18.0.2

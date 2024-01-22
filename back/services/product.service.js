@@ -1,6 +1,8 @@
 const faker = require("faker");
 const Boom = require("boom");
 
+const getConnection = require("../libs/postgres");
+
 class ProductsService {
   constructor() {
     this.products = [];
